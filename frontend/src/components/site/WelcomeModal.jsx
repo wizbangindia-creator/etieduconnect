@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { X, Loader2, CheckCircle2, ShieldCheck, BadgeCheck, RefreshCcw, Lock, LifeBuoy } from "lucide-react";
 import { toast } from "sonner";
 import { api, formatApiErrorDetail } from "@/lib/api";
 import { getLeadContext, track } from "@/lib/analytics";
 
 const COURSES = ["Online MBA", "Online Executive MBA", "Online Dual MBA", "Online MCA", "Online MCom", "Online MA", "Online BBA", "Online BCom", "Online BA", "Online BCA"];
+const CAT_TO_COURSE = { MBA: "Online MBA", MCA: "Online MCA", BCA: "Online BCA", BBA: "Online BBA", BCOM: "Online BCom", MCOM: "Online MCom", BA: "Online BA", MA: "Online MA" };
 const STATES = ["Uttar Pradesh", "Maharashtra", "Delhi", "Bihar", "Karnataka", "Haryana", "Rajasthan", "Gujarat", "West Bengal", "Telangana", "Jharkhand", "Madhya Pradesh", "Kerala", "Odisha", "Tamil Nadu", "Andhra Pradesh", "Punjab", "Uttarakhand", "Assam", "Chandigarh", "Sikkim", "Chhattisgarh", "Goa", "Tripura", "Arunachal Pradesh", "Himachal Pradesh", "Jammu and Kashmir", "Lakshadweep", "Meghalaya", "Manipur", "Nagaland", "Puducherry", "Mizoram", "Andaman and Nicobar Island", "Dadra and Nagar Haveli", "Daman and Diu", "Ladakh", "Other"];
 const TRUST = [
   { icon: BadgeCheck, t: "EduConnect Assured" },
@@ -19,12 +21,38 @@ export function WelcomeModal() {
   const [f, setF] = useState({ name: "", phone: "", course: "", state: "" });
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(null);
+  const loc = useLocation();
 
   useEffect(() => {
     if (sessionStorage.getItem(SEEN_KEY)) return;
-    const t = setTimeout(() => { setOpen(true); track("welcome_popup_view"); }, 1400);
-    return () => clearTimeout(t);
+    let opened = false;
+    const openNow = (via) => { if (opened) return; opened = true; setOpen(true); track("welcome_popup_view", { via }); };
+    const timer = setTimeout(() => openNow("auto"), 2500);
+    const onLeave = (e) => { if (e.clientY <= 0) openNow("exit_intent"); };
+    document.addEventListener("mouseleave", onLeave);
+    return () => { clearTimeout(timer); document.removeEventListener("mouseleave", onLeave); };
   }, []);
+
+  // Smart prefill from the university/course page the visitor is on
+  useEffect(() => {
+    if (!open) return;
+    const m = loc.pathname.match(/^\/(courses|universities)\/([^/]+)$/);
+    if (!m) return;
+    const [, type, slug] = m;
+    api.get(`/${type}/${slug}`).then(({ data }) => {
+      setF((p) => {
+        if (type === "courses") {
+          return { ...p, course: p.course || CAT_TO_COURSE[data.category] || "" };
+        }
+        const cat = (data.categories || []).find((c) => CAT_TO_COURSE[c]);
+        return {
+          ...p,
+          course: p.course || (cat ? CAT_TO_COURSE[cat] : ""),
+          state: p.state || (STATES.includes(data.state) ? data.state : ""),
+        };
+      });
+    }).catch(() => {});
+  }, [open, loc.pathname]);
 
   const close = () => { sessionStorage.setItem(SEEN_KEY, "1"); setOpen(false); };
   const upd = (k, v) => setF((p) => ({ ...p, [k]: v }));
