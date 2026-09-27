@@ -1,0 +1,138 @@
+{
+  "project_info": {
+    "name": "ETI EduConnect™ V1",
+    "tagline": "Know What's Next",
+    "positioning": "Your Education & Career Platform",
+    "company": "ETI Learning Systems Private Limited",
+    "domain": "EtiEduconnect.com",
+    "app_type": "hybrid_fullstack",
+    "primary_archetype": "Swiss & High-Contrast / Modern Tech Trust",
+    "file_type": ".js"
+  },
+  "color_palette": {
+    "primary_navy": "#0A2472",
+    "primary_navy_dark": "#06174A",
+    "primary_navy_light": "#1237A3",
+    "accent_cyan": "#00E5FF",
+    "accent_blue": "#2563EB",
+    "accent_emerald": "#059669",
+    "accent_amber": "#F59E0B",
+    "surface_background": "#F8FAFC",
+    "surface_card": "#FFFFFF",
+    "surface_dark": "#0B132B",
+    "text_primary": "#0F172A",
+    "text_secondary": "#475569",
+    "text_muted": "#64748B",
+    "text_light": "#F8FAFC",
+    "border_light": "#E2E8F0",
+    "border_focus": "#0A2472",
+    "badge_online": "#ECFDF5",
+    "badge_online_text": "#047857",
+    "badge_distance": "#EFF6FF",
+    "badge_distance_text": "#1D4ED8"
+  },
+  "typography": {
+    "font_family_heading": "'Poppins', 'Outfit', sans-serif",
+    "font_family_body": "'Inter', 'DM Sans', sans-serif",
+    "font_family_mono": "'JetBrains Mono', monospace",
+    "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900",
+    "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight text-slate-900",
+    "h3_subsection": "text-xl sm:text-2xl font-semibold text-slate-900",
+    "h4_card": "text-lg sm:text-xl font-medium text-slate-900",
+    "body_text": "text-base text-slate-600 leading-relaxed",
+    "small_label": "text-xs font-semibold uppercase tracking-wider text-slate-500",
+    "hero_gradient_text": "bg-clip-text text-transparent bg-gradient-to-r from-[#0A2472] via-[#1237A3] to-[#0088FF]"
+  },
+  "layout_and_spacing": {
+    "container_max_width": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-16 md:py-24",
+    "card_padding": "p-6 sm:p-8",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8",
+    "comparison_grid": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4",
+    "nav_height": "h-20"
+  },
+  "components": {
+    "header": {
+      "style": "fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm transition-all duration-200",
+      "logo_spec": "White or Navy ETI EduConnect™ wordmark with crisp cyan accent dot on an elegant navy pill badge (#0A2472)",
+      "navigation_links": ["Universities", "Courses", "Compare Tool", "Online vs Distance", "Knowledge Hub", "Get Guidance"],
+      "cta_button": "bg-[#0A2472] hover:bg-[#06174A] text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+    },
+    "hero_section": {
+      "style": "relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-slate-50 via-blue-50/30 to-white",
+      "search_bar": "bg-white p-3 sm:p-4 rounded-2xl shadow-2xl border border-slate-200 flex flex-col md:flex-row gap-3 items-center max-w-4xl mx-auto",
+      "search_inputs": ["University/Course keyword", "Degree level", "Mode (Online/Distance/Regular)", "Filter button"]
+    },
+    "comparison_table": {
+      "wrapper_style": "overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-xl",
+      "column_sticky": "sticky left-0 bg-slate-900 text-white z-20 font-semibold p-4 border-r border-slate-800",
+      "column_data": "p-4 text-center border-r border-slate-100 min-w-[220px] max-w-[280px]",
+      "highlight_row": "bg-blue-50/50 font-medium"
+    },
+    "university_card": {
+      "style": "group bg-white rounded-2xl border border-slate-200/80 hover:border-blue-400 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative overflow-hidden",
+      "badge": "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-[#0A2472] border border-blue-100",
+      "compare_checkbox": "rounded text-[#0A2472] focus:ring-[#0A2472] h-4 w-4 cursor-pointer"
+    },
+    "lead_capture_modal": {
+      "style": "bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl border border-slate-100 relative",
+      "header_gradient": "bg-gradient-to-r from-[#0A2472] to-[#1237A3] text-white p-6 -m-8 mb-6 rounded-t-3xl",
+      "input_style": "w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-[#0A2472] focus:ring-2 focus:ring-blue-100 outline-none text-sm transition-all"
+    },
+    "admin_dashboard": {
+      "sidebar": "w-64 bg-slate-900 text-slate-300 min-h-screen p-6 border-r border-slate-800 flex flex-col justify-between",
+      "stats_card": "bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex items-center justify-between",
+      "data_table": "w-full text-left border-collapse text-sm text-slate-700"
+    }
+  },
+  "image_urls": {
+    "hero_background_study": {
+      "url": "https://images.unsplash.com/photo-1762512346988-045f4d5ad2b3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwzfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHMlMjBzdHVkeSUyMGxpYnJhcnl8ZW58MHx8fHwxNzkwNDk0MzIzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Hero Section & Discovery Feature Background",
+      "description": "Students studying together in a modern academic library setup"
+    },
+    "modern_campus_building": {
+      "url": "https://images.unsplash.com/photo-1788022907454-107301247c98?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHw0fHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHMlMjBzdHVkeSUyMGxpYnJhcnl8ZW58MHx8fHwxNzkwNDk0MzIzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "University Directory / Hero Campus Banner",
+      "description": "Illuminated modern academic glass architecture"
+    },
+    "online_learning_student": {
+      "url": "https://images.unsplash.com/photo-1601097874965-f940d4f012b5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHw0fHxvbmxpbmUlMjBzdHVkZW50JTIwbGFwdG9wJTIwZWR1Y2F0aW9uJTIwbGVhcm5pbmd8ZW58MHx8fHwxNzkwNDk0MzI5fDA&ixlib=rb-4.1.0&q=85",
+      "category": "Online vs Distance Education Page / Learner Feature",
+      "description": "Student actively engaging with course material on a laptop"
+    },
+    "university_arch_campus": {
+      "url": "https://images.unsplash.com/photo-1775503059048-214026cce5cf?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwYXJjaGl0ZWN0dXJlJTIwY2FtcHVzfGVufDB8fHx8MTc5MDQ5NDMyOXww&ixlib=rb-4.1.0&q=85",
+      "category": "University Profile Cover / Global Campus Header",
+      "description": "Adelaide university courtyard and classic-modern blend campus"
+    },
+    "academic_library_interior": {
+      "url": "https://images.unsplash.com/photo-1761492190275-129cf71ff124?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHx1bml2ZXJzaXR5JTIwY2FtcHVzJTIwc3R1ZGVudHMlMjBzdHVkeSUyMGxpYnJhcnl8ZW58MHx8fHwxNzkwNDk0MzIzfDA&ixlib=rb-4.1.0&q=85",
+      "category": "Knowledge Hub / Guides Cover Image",
+      "description": "Architectural modern university library with arches"
+    }
+  },
+  "testing_attributes": {
+    "rule": "Every interactive element (button, link, input, select, tab, checkbox, card) and major statistical display MUST include a unique kebab-case data-testid attribute.",
+    "examples": [
+      "data-testid=\"nav-logo-link\"",
+      "data-testid=\"nav-compare-button\"",
+      "data-testid=\"hero-search-input\"",
+      "data-testid=\"university-filter-select\"",
+      "data-testid=\"university-card-1-compare-checkbox\"",
+      "data-testid=\"comparison-table-add-university-button\"",
+      "data-testid=\"lead-modal-submit-button\"",
+      "data-testid=\"admin-cms-leads-tab\""
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. Ensure all code files use React .js / .jsx extensions in /src.",
+    "2. Implement a complete, fully functional single-page-app with client-side routing or view switching for all key pages: Homepage, University Directory & Profiles, Course Directory & Profiles, University Comparison Engine (2-4 universities side-by-side), Course Comparison Engine, Online vs Distance Explainer, Knowledge Hub & Guides, Get Guidance Lead Form, Landing Pages system, Shortlist Drawer, and Admin CMS Dashboard.",
+    "3. Use Lucide icons (@lucide/react or lucide-react) for all icons; NEVER use emojis for icons.",
+    "4. Add Sonner toast notifications when users add/remove items from shortlist or submit lead forms.",
+    "5. Use high contrast, APCA-compliant text over dark or light backgrounds. Never use transparent headers without blur or background fill.",
+    "6. Include mock data for at least 8-12 realistic Indian and global universities (e.g. Amity Online, Chandigarh University Online, NMIMS Global, Manipal Online, DU SOL, IGNOU, BITS Pilani Work Integrated) with accurate details (NAAC ratings, UGC/DEB approvals, fee ranges, EMI options, placement support).",
+    "7. Include all required testing attributes (`data-testid`) across every component.",
+    "8. Maintain a premium, trust-first, modern technology feel matching the ETI EduConnect™ branding."
+  ]
+}
