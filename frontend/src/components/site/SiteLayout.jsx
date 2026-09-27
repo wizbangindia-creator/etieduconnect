@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { LeadModal } from "./LeadModal";
+import { WelcomeModal } from "./WelcomeModal";
 import { ShortlistDrawer } from "./ShortlistDrawer";
 import { WhatsAppButton } from "./WhatsAppButton";
 
@@ -15,6 +16,7 @@ export function SiteLayout() {
       <main className="flex-1 pt-16 md:pt-20"><Outlet /></main>
       <Footer />
       <LeadModal />
+      <WelcomeModal />
       <ShortlistDrawer />
       <WhatsAppButton />
     </div>
