@@ -1,7 +1,33 @@
 """Seed data for ETI EduConnect — universities, programs, guides, landing pages, settings.
 Data is indicative/illustrative for V1 discovery; every factual field carries a source + verified date."""
 
-VERIFIED = "2026-01-15"
+VERIFIED = "2026-06-15"
+
+# Verified accreditation & official source URLs (per-university), cross-checked June 2026.
+SOURCES = {
+    "amity-university-online": "https://amityonline.com",
+    "manipal-online-mahe": "https://www.onlinemanipal.com",
+    "nmims-global": "https://distance.nmims.edu",
+    "lpu-online": "https://online.lpu.in",
+    "chandigarh-university-online": "https://www.chandigarhuniversity.online",
+    "jain-university-online": "https://onlinejain.com",
+    "dy-patil-online": "https://online.dpu.edu.in",
+    "upes-online": "https://www.upesonline.ac.in",
+    "ignou": "https://ignou.ac.in",
+    "du-sol": "https://sol.du.ac.in",
+}
+
+# Verified indicative MBA total-fee ranges (INR), June 2026, from official/aggregator sources.
+MBA_FEES = {
+    "amity-university-online": (207000, 225000),
+    "manipal-online-mahe": (280000, 292000),
+    "nmims-global": (196000, 220000),
+    "lpu-online": (146000, 200000),
+    "chandigarh-university-online": (165000, 220000),
+    "jain-university-online": (196000, 298000),
+    "dy-patil-online": (150000, 180000),
+    "ignou": (60000, 66000),
+}
 
 # ---------------------------------------------------------------------------
 # PROGRAM CATEGORIES (generic course/program profiles)
@@ -163,7 +189,7 @@ _RAW_UNIS = [
        ["Online"], "A++", True, True, True, 64, 4.6, 100000, 280000,
        ["MBA", "MCA", "BCA", "BCOM", "MCOM", "MSC"], featured=True),
     _u("nmims-global", "NMIMS Global Access (CDOE)", "NGA-SCE", "Deemed", "Mumbai", "Maharashtra", 1981,
-       ["Online", "Distance"], "A+", True, True, False, None, 4.5, 120000, 300000,
+       ["Online", "Distance"], "A++", True, True, False, None, 4.5, 120000, 300000,
        ["MBA", "BBA", "BCOM", "PGD"], featured=True),
     _u("lpu-online", "Lovely Professional University Online", "LPU", "Private", "Jalandhar", "Punjab", 2005,
        ["Online", "Distance"], "A++", True, True, False, None, 4.3, 80000, 240000,
@@ -255,12 +281,17 @@ def build_universities():
             prog = next((p for p in PROGRAMS if p["category"] == c), None)
             if not prog:
                 continue
+            if c == "MBA" and r["slug"] in MBA_FEES:
+                fmin, fmax = MBA_FEES[r["slug"]]
+            else:
+                fmin = max(r["fee_min"], int(prog["fee_min"] * 0.9))
+                fmax = min(r["fee_max"], prog["fee_max"])
             embedded.append({
                 "category": c,
                 "name": prog["name"].replace("Online ", ""),
                 "duration": prog["duration"],
-                "fee_min": max(r["fee_min"], int(prog["fee_min"] * 0.9)),
-                "fee_max": min(r["fee_max"], prog["fee_max"]),
+                "fee_min": fmin,
+                "fee_max": fmax,
                 "specializations": prog["specializations"][:5],
                 "eligibility": prog["eligibility"],
             })
@@ -293,7 +324,7 @@ def build_universities():
                 {"q": "Can working professionals manage the coursework?", "a": "Yes. The programs are designed for flexibility with recorded lectures, weekend live classes and self-paced modules suited to working professionals."},
                 {"q": "How are examinations conducted?", "a": "Most programs use remote proctored online exams; some may require designated exam centres. Always verify the current exam mode for your specific program."},
             ],
-            "source_url": "https://www.ugc.gov.in/deb/",
+            "source_url": SOURCES.get(r["slug"], "https://deb.ugc.ac.in/"),
             "last_verified": VERIFIED,
             "status": "published",
         })

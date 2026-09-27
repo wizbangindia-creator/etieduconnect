@@ -20,6 +20,7 @@ import Guides from "@/pages/Guides";
 import GuideDetail from "@/pages/GuideDetail";
 import GetGuidance from "@/pages/GetGuidance";
 import SearchPage from "@/pages/SearchPage";
+import Advisor from "@/pages/Advisor";
 import Landing from "@/pages/Landing";
 import NotFound from "@/pages/NotFound";
 
@@ -58,6 +59,7 @@ function App() {
                   <Route path="/guides/:slug" element={<GuideDetail />} />
                   <Route path="/get-guidance" element={<GetGuidance />} />
                   <Route path="/search" element={<SearchPage />} />
+                  <Route path="/advisor" element={<Advisor />} />
                   <Route path="/lp/:slug" element={<Landing />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>

@@ -3,12 +3,9 @@ import { Link } from "react-router-dom";
 export function Logo({ variant = "dark", className = "" }) {
   const light = variant === "light";
   return (
-    <Link to="/" data-testid="nav-logo-link" className={`inline-flex items-center gap-2 group ${className}`}>
-      <span className="flex items-center justify-center h-9 w-9 rounded-xl bg-navy text-white font-head font-extrabold text-sm shadow-md group-hover:scale-105 transition-transform">
-        ETI
-      </span>
+    <Link to="/" data-testid="nav-logo-link" className={`inline-flex items-center gap-1.5 group ${className}`}>
       <span className={`font-head font-extrabold text-lg tracking-tight ${light ? "text-white" : "text-navy"}`}>
-        EduConnect<sup className="text-[9px] font-semibold ml-0.5">™</sup>
+        ETI <span className={light ? "text-white" : "text-navy-light"}>EduConnect</span><sup className="text-[9px] font-semibold ml-0.5">™</sup>
       </span>
     </Link>
   );

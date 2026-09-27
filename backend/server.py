@@ -122,6 +122,14 @@ class EventInput(BaseModel):
     session_id: Optional[str] = None
     path: Optional[str] = None
 
+class AdvisorInput(BaseModel):
+    qualification: Optional[str] = None
+    program_interest: Optional[str] = None
+    preferred_mode: Optional[str] = None
+    budget: Optional[int] = None
+    priority: Optional[str] = None   # cost / quality / recognition / flexibility
+    location: Optional[str] = None
+
 class SettingsUpdate(BaseModel):
     whatsapp_number: Optional[str] = None
     whatsapp_message: Optional[str] = None
@@ -255,6 +263,98 @@ async def compare_courses(slugs: str = Query(...)):
     docs = await db.courses.find({"slug": {"$in": slug_list}}, {"_id": 0}).to_list(10)
     docs.sort(key=lambda d: slug_list.index(d["slug"]) if d["slug"] in slug_list else 99)
     return docs
+
+
+NAAC_SCORE = {"A++": 5, "A+": 4, "A": 3, "B++": 2, "B+": 1}
+
+def _norm_cat(text):
+    if not text:
+        return None
+    t = text.strip().upper().replace(".", "").replace(" ", "")
+    mapping = {"BCOM": "BCOM", "MCOM": "MCOM", "MSC": "MSC", "BSC": "BSC", "PGDIPLOMA": "PGD", "PGD": "PGD"}
+    if t in mapping:
+        return mapping[t]
+    if t in ("MBA", "MCA", "BCA", "BBA", "BA", "MA"):
+        return t
+    if "NOTSURE" in t or "ANY" in t:
+        return None
+    return t
+
+@api_router.post("/advisor/recommend")
+async def advisor_recommend(inp: AdvisorInput):
+    cat = _norm_cat(inp.program_interest)
+    unis = await db.universities.find({"status": "published"}, {"_id": 0}).to_list(500)
+    candidates = [u for u in unis if (cat is None or cat in u.get("categories", []))]
+    if not candidates:
+        candidates = unis
+
+    scored = []
+    for u in candidates:
+        score, reasons = 0.0, []
+        score += (u.get("rating") or 0) * 2
+        score += NAAC_SCORE.get(u.get("naac_grade"), 0)
+        # program fee for chosen category
+        prog = next((p for p in u.get("programs", []) if p["category"] == cat), None) if cat else None
+        fee_min = prog["fee_min"] if prog else u.get("fee_min", 0)
+
+        if inp.preferred_mode and inp.preferred_mode in ("Online", "Distance"):
+            if inp.preferred_mode in u.get("modes", []):
+                score += 3; reasons.append(f"Offers {inp.preferred_mode} mode")
+        if inp.budget:
+            if fee_min <= inp.budget:
+                score += 3; reasons.append("Fits within your budget")
+            else:
+                score -= 3
+        if inp.location and u.get("state", "").lower() == inp.location.lower():
+            score += 2; reasons.append(f"Located in {u['state']}")
+
+        pr = (inp.priority or "").lower()
+        if pr == "cost":
+            score += max(0, 3 - fee_min / 100000)
+            if fee_min <= 100000:
+                reasons.append("Affordable fees")
+        elif pr in ("quality", "ranking"):
+            score += NAAC_SCORE.get(u.get("naac_grade"), 0) * 0.8
+            if u.get("nirf_rank"):
+                score += 2; reasons.append(f"NIRF ranked #{u['nirf_rank']}")
+            if u.get("naac_grade") in ("A++", "A+"):
+                reasons.append(f"High NAAC grade ({u['naac_grade']})")
+        elif pr == "recognition":
+            rc = len(u.get("recognition", []))
+            score += rc * 0.7
+            reasons.append(f"{rc} recognitions incl. " + (", ".join(u.get("recognition", [])[:2])))
+        elif pr == "flexibility":
+            if "Online" in u.get("modes", []):
+                score += 2; reasons.append("Fully online & flexible")
+
+        if u.get("ugc_deb_approved"):
+            score += 1
+        if not reasons:
+            reasons.append(f"NAAC {u.get('naac_grade')} accredited, UGC-entitled")
+        scored.append({
+            "slug": u["slug"], "name": u["name"], "short_name": u["short_name"],
+            "logo_text": u["logo_text"], "logo_color": u["logo_color"], "city": u["city"],
+            "state": u["state"], "naac_grade": u["naac_grade"], "rating": u["rating"],
+            "modes": u["modes"], "fee_min": fee_min, "fee_max": (prog["fee_max"] if prog else u.get("fee_max")),
+            "sponsored": u.get("sponsored", False),
+            "match_score": round(score, 1), "match_reasons": reasons[:3],
+        })
+
+    scored.sort(key=lambda x: x["match_score"], reverse=True)
+    top = scored[:4]
+    if top:
+        mx = top[0]["match_score"] or 1
+        for t in top:
+            t["match_percent"] = min(98, max(60, int((t["match_score"] / mx) * 92) + 6))
+
+    recommended_program = None
+    if cat:
+        recommended_program = await db.courses.find_one({"category": cat, "status": "published"}, {"_id": 0, "body": 0})
+
+    await db.events.insert_one({"event": "advisor_complete",
+                                "props": {"program": inp.program_interest, "mode": inp.preferred_mode, "priority": inp.priority},
+                                "created_at": datetime.now(timezone.utc).isoformat()})
+    return {"recommendations": top, "recommended_program": recommended_program, "matched_category": cat}
 
 
 # ------------------------- Public: guides & landing & search -------------------------

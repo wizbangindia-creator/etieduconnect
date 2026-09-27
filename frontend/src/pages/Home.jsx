@@ -56,6 +56,7 @@ export default function Home() {
 
             <div className="mt-5 flex flex-wrap gap-3">
               <Link to="/compare/universities" data-testid="hero-compare-cta" onClick={() => track("comparison_start", { from: "hero" })} className="inline-flex items-center gap-2 bg-cyan-brand text-navy px-5 py-3 rounded-xl font-semibold text-sm hover:bg-white transition-colors"><GitCompare className="h-4 w-4" /> Compare Universities</Link>
+              <Link to="/advisor" data-testid="hero-advisor-cta" onClick={() => track("advisor_start", { from: "hero" })} className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-5 py-3 rounded-xl font-semibold text-sm hover:bg-white/20 transition-colors"><Sparkles className="h-4 w-4 text-cyan-brand" /> Try AI Advisor</Link>
               <Link to="/courses" data-testid="hero-explore-cta" className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-5 py-3 rounded-xl font-semibold text-sm hover:bg-white/20 transition-colors">Explore Courses <ArrowRight className="h-4 w-4" /></Link>
             </div>
 

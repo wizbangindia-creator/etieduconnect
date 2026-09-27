@@ -9,6 +9,7 @@ const NAV = [
   { label: "Universities", to: "/universities" },
   { label: "Courses", to: "/courses" },
   { label: "Compare", to: "/compare/universities" },
+  { label: "AI Advisor", to: "/advisor" },
   { label: "Online vs Distance", to: "/online-vs-distance" },
   { label: "Guides", to: "/guides" },
 ];
