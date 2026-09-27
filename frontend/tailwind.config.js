@@ -10,8 +10,9 @@ module.exports = {
         sans: ["Inter", "sans-serif"],
       },
       colors: {
-        navy: { DEFAULT: "#0A2472", dark: "#06174A", light: "#1237A3" },
-        cyan: { brand: "#00E5FF" },
+        navy: { DEFAULT: "#2B54F0", dark: "#1E3ACB", light: "#5B7BFF" },
+        cyan: { brand: "#FFC20E" },
+        sun: { DEFAULT: "#FFC20E", dark: "#F2A900" },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },

@@ -54,7 +54,7 @@ export function Header() {
             {count > 0 && <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-cyan-brand text-navy text-[11px] font-bold flex items-center justify-center">{count}</span>}
           </button>
           <button data-testid="header-guidance-button" onClick={() => openLead({ cta_label: "Header - Get Guidance", context_type: "general" })}
-            className="hidden sm:inline-flex bg-navy hover:bg-navy-dark text-white px-4 py-2.5 rounded-xl text-sm font-semibold shadow-md transition-all hover:-translate-y-0.5">
+            className="hidden sm:inline-flex bg-sun hover:bg-sun-dark text-navy px-4 py-2.5 rounded-xl text-sm font-bold shadow-md transition-all hover:-translate-y-0.5">
             Get Guidance
           </button>
           <button className="lg:hidden p-2.5 rounded-xl hover:bg-slate-100" onClick={() => setMobile(true)} data-testid="mobile-menu-button" aria-label="Menu">
